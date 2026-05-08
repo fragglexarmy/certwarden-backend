@@ -96,7 +96,7 @@ func (store *Storage) GetAllValidCurrentOrders(q pagination_sort.Query) (orders 
 	GROUP BY
 		ao.certificate_id
 	HAVING
-		MAX(ao.valid_to)
+		MAX(ao.created_at)
 	ORDER BY
 		%s
 	LIMIT
@@ -528,7 +528,7 @@ func (store *Storage) GetNewestIncompleteCertOrderId(certId int) (orderId int, e
 	GROUP BY
 		certificate_id
 	HAVING
-		MAX(expires)
+		MAX(created_at)
 	`
 
 	row := store.db.QueryRowContext(ctx, query,
@@ -826,7 +826,7 @@ func (store *Storage) getCertNewestValidOrder(certId int, certName string) (orde
 	GROUP BY
 		certificate_id
 	HAVING
-		MAX(valid_to)
+		MAX(ao.created_at)
 	`
 
 	row := store.db.QueryRowContext(ctx, query,

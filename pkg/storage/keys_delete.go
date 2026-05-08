@@ -75,7 +75,7 @@ func (store *Storage) KeyInUse(id int) (inUse bool, err error) {
 	GROUP BY
 		certificate_id
 	HAVING
-		MAX(valid_to)
+		MAX(created_at)
 		AND
 		finalized_key_id = $1
 	
